@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Little Sister's Journal & English Space</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Playfair+Display:ital,wght@0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-base: #e3e8e2;
+      --glass-surface: rgba(255, 255, 255, 0.48);
+      --glass-surface-strong: rgba(255, 255, 255, 0.68);
+      --glass-border: rgba(255, 255, 255, 0.78);
+      --glass-highlight: rgba(255, 255, 255, 0.92);
+      --ink: #242926;
+      --muted: #58635c;
+      --accent-rose: #c4687a;
+      --accent-sage: #547868;
+      --shadow-glass: 0 18px 40px rgba(34, 46, 39, 0.08);
+      --shadow-frame: 0 20px 44px rgba(34, 46, 39, 0.12);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Padauk', sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 14%, rgba(246, 223, 227, 0.75) 0%, transparent 45%),
+        radial-gradient(circle at 86% 22%, rgba(203, 222, 209, 0.85) 0%, transparent 48%),
+        radial-gradient(circle at 50% 92%, rgba(235, 232, 221, 0.9) 0%, transparent 55%),
+        linear-gradient(135deg, #dce4dc 0%, #eae9e2 52%, #d8e1d9 100%);
+      background-attachment: fixed;
+      color: var(--ink);
+      line-height: 1.75;
+      padding: 24px 16px 64px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ====================
+       1. GLASS NAVBAR
+    ==================== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 22px;
+      background: var(--glass-surface-strong);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      margin-bottom: 26px;
+      box-shadow: var(--shadow-glass), inset 0 1px 0 var(--glass-highlight);
+    }
+
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.25s var(--ease);
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.65);
+      border-color: var(--glass-border);
+    }
+
+    /* ====================
+       2. GLASS HERO & MODERN ARCH FRAME
+    ==================== */
+    .hero-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      align-items: center;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.36));
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      padding: 28px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-glass), inset 0 1px 1px var(--glass-highlight);
+    }
+
+    /* Frosted Glass Outer Bezel + Arch Photo Frame */
+    .hero-frame-outer {
+      padding: 10px;
+      border-radius: 155px 155px 34px 34px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.28));
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-frame), inset 0 2px 6px rgba(255, 255, 255, 0.8);
+      max-width: 260px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .hero-arch {
+      position: relative;
+      border-radius: 145px 145px 26px 26px;
+      overflow: hidden;
+      aspect-ratio: 3 / 3.85;
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Subtle Glass Sheen Over Photo */
+    .hero-arch::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.36) 0%,
+        rgba(255, 255, 255, 0.06) 42%,
+        rgba(255, 255, 255, 0) 65%
+      );
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+      pointer-events: none;
+    }
+
+    .hero-arch img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+      transition: transform 0.65s var(--ease);
+    }
+
+    .hero-frame-outer:hover .hero-arch img {
+      transform: scale(1.05);
+    }
+
+    .badge-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-rose);
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(196, 104, 122, 0.08);
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      line-height: 1.22;
+      color: var(--ink);
+    }
+
+    .hero-desc {
+      font-family: 'Padauk', 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .labubu-note {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 20px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      box-shadow: inset 0 1px 0 var(--glass-highlight);
+    }
+
+    .labubu-note img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    .labubu-note-text {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ====================
+       3. GLASS SECTION BLOCK
+    ==================== */
+    .section-block {
+      background: var(--glass-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 30px;
+      padding: 28px 24px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-glass), inset 0 1px 0 var(--glass-highlight);
+    }
+
+    .sec-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+      padding-bottom: 12px;
+    }
+
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 23px;
+    }
+
+    .sec-sub {
+      font-family: 'Padauk', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ====================
+       4. MODERN GLASS PHOTO FRAMES (BENTO GALLERY)
+    ==================== */
+    .bento-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    /* Outer Glass Frame Wrapper */
+    .glass-frame {
+      padding: 8px;
+      border-radius: 28px;
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.25));
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      box-shadow: 0 14px 32px rgba(34, 46, 39, 0.09), inset 0 1px 1px #ffffff;
+      transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+    }
+
+    /* Shape Variations matching Modern Editorial Style */
+    .glass-frame.shape-pill {
+      border-radius: 999px 999px 30px 30px;
+    }
+
+    .glass-frame.shape-leaf {
+      border-radius: 30px 84px 30px 84px;
+    }
+
+    .modern-shot {
+      position: relative;
+      border-radius: 21px;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .glass-frame.shape-pill .modern-shot {
+      border-radius: 999px 999px 23px 23px;
+    }
+
+    .glass-frame.shape-leaf .modern-shot {
+      border-radius: 23px 76px 23px 76px;
+    }
+
+    /* Glass reflection overlay across the image */
+    .modern-shot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        130deg,
+        rgba(255, 255, 255, 0.32) 0%,
+        rgba(255, 255, 255, 0.04) 45%,
+        transparent 65%
+      );
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+      pointer-events: none;
+    }
+
+    .modern-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+      transition: transform 0.65s var(--ease);
+    }
+
+    /* Frosted Floating Glass Caption */
+    .shot-overlay {
+      position: absolute;
+      inset: auto 10px 10px 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.66);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      box-shadow: 0 8px 20px rgba(34, 46, 39, 0.1);
+      transform: translateY(3px);
+      transition: transform 0.35s var(--ease), background 0.35s ease;
+      z-index: 2;
+    }
+
+    .glass-frame:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 42px rgba(34, 46, 39, 0.14), inset 0 1px 1px #ffffff;
+    }
+
+    .glass-frame:hover .modern-shot img {
+      transform: scale(1.06);
+    }
+
+    .glass-frame:hover .shot-overlay {
+      transform: translateY(0);
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .shot-en {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .shot-mm {
+      font-family: 'Padauk', sans-serif;
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+
+    /* ====================
+       5. GLASS VOCABULARY CARDS
+    ==================== */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .vocab-card {
+      background: rgba(255, 255, 255, 0.56);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 22px;
+      padding: 16px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(34, 46, 39, 0.04), inset 0 1px 0 var(--glass-highlight);
+      transition: all 0.25s var(--ease);
+    }
+
+    .vocab-card:hover {
+      border-color: rgba(196, 104, 122, 0.55);
+      background: rgba(255, 255, 255, 0.82);
+      transform: translateY(-3px);
+    }
+
+    .vocab-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .vocab-word {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .audio-pill {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-sage);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(84, 120, 104, 0.2);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .vocab-mm {
+      font-family: 'Padauk', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .vocab-example {
+      font-size: 12px;
+      color: var(--accent-rose);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* ====================
+       6. DAILY SENTENCES
+    ==================== */
+    .phrase-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .phrase-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.54);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      box-shadow: inset 0 1px 0 var(--glass-highlight);
+    }
+
+    .phrase-en {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .phrase-mm {
+      font-family: 'Padauk', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .listen-btn {
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 15px;
+      border-radius: 999px;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(34, 46, 39, 0.06);
+      transition: all 0.22s ease;
+    }
+
+    .listen-btn:hover {
+      background: var(--accent-rose);
+      color: #ffffff;
+      border-color: var(--accent-rose);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    @media (min-width: 680px) {
+      .hero-card {
+        grid-template-columns: 245px 1fr;
+        padding: 32px;
+      }
+
+      .bento-gallery {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .vocab-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <nav class="navbar">
+      <div class="brand">Little Sister's Space</div>
+      <div class="nav-links">
+        <a href="#moments">Moments</a>
+        <a href="#vocabulary">Words</a>
+        <a href="#sentences">Sentences</a>
+      </div>
+    </nav>
+
+    <!-- HERO WITH FROSTED GLASS ARCH FRAME -->
+    <section class="hero-card">
+      <div class="hero-frame-outer">
+        <div class="hero-arch">
+          <img src="images/sister-1.jpg" alt="Little Sister" />
+        </div>
+      </div>
+
+      <div>
+        <span class="badge-tag">Age 7 • Modern Glass Edition</span>
+        <h1 class="hero-title">Little Moments & Daily English</h1>
+        <!-- <p class="hero-desc">
+          ချစ်စရာ ညီမလေးရဲ့ အမှတ်တရ ပုံလေးတွေကို ခေတ်မီတဲ့ Glass Frame ပုံစံတွေနဲ့ စုစည်းထားပြီး နေ့စဉ် English စကားလုံးလေးတွေကိုလည်း အသံထွက် လေ့လာနိုင်ပါတယ်။
+        </p> -->
+
+        <div class="labubu-note">
+          <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=200&q=80" alt="Labubu Companion" />
+          <div class="labubu-note-text">
+            <strong>Labubu Corner:</strong> စာလုံးလေးတွေကို နှိပ်ပြီး အသံထွက် အတူတူ လိုက်ဆိုကြည့်ပါ။
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODERN GLASS OVERLAY PHOTO GALLERY (4 PHOTOS) -->
+    <section class="section-block" id="moments">
+      <div class="sec-header">
+        <h2 class="sec-title">Curated Snapshots</h2>
+        <span class="sec-sub">ပုံလေးတွေပေါ် တင်ကြည့်ပါ</span>
+      </div>
+
+      <div class="bento-gallery">
+        <!-- ပုံ ၁ -->
+        <div class="glass-frame shape-pill">
+          <div class="modern-shot">
+            <img src="images/sister-1.jpg" alt="Rainy day smile" />
+            <div class="shot-overlay">
+              <div class="shot-en">Pink Umbrella Day</div>
+              <div class="shot-mm">မိုးထီးလေးနဲ့</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ပုံ ၂ -->
+        <div class="glass-frame">
+          <div class="modern-shot">
+            <img src="images/sister-2.jpg" alt="Paper craft time" />
+            <div class="shot-overlay">
+              <div class="shot-en">Paper Craft Focus</div>
+              <div class="shot-mm">စက္ကူ ခေါက်နေချိန်</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ပုံ ၃ -->
+        <div class="glass-frame">
+          <div class="modern-shot">
+            <img src="images/sister-3.jpg" alt="Little memory" />
+            <div class="shot-overlay">
+              <div class="shot-en">Quiet Little Moment</div>
+              <div class="shot-mm">အမှတ်တရပုံ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ပုံ ၄ -->
+        <div class="glass-frame shape-leaf">
+          <div class="modern-shot">
+            <img src="images/sister-4.jpg" alt="Golden pagoda evening" />
+            <div class="shot-overlay">
+              <div class="shot-en">Golden Evening</div>
+              <div class="shot-mm">ညနေခင်း ဘုရားဖူးပုံရိပ်</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENGLISH VOCABULARY -->
+    <section class="section-block" id="vocabulary">
+      <div class="sec-header">
+        <h2 class="sec-title">English Vocabulary</h2>
+        <span class="sec-sub">နှိပ်ပြီး အသံထွက် နားထောင်ပါ</span>
+      </div>
+
+      <div class="vocab-grid">
+        <div class="vocab-card" data-speak="Umbrella">
+          <div class="vocab-top">
+            <span class="vocab-word">Umbrella</span>
+            <span class="audio-pill">Listen</span>
+          </div>
+          <div class="vocab-mm">ထီး</div>
+          <div class="vocab-example">"I have a pink umbrella."</div>
+        </div>
+
+        <div class="vocab-card" data-speak="Origami">
+          <div class="vocab-top">
+            <span class="vocab-word">Origami</span>
+            <span class="audio-pill">Listen</span>
+          </div>
+          <div class="vocab-mm">စက္ကူခေါက်အနုပညာ</div>
+          <div class="vocab-example">"I like folding paper."</div>
+        </div>
+
+        <div class="vocab-card" data-speak="Pagoda">
+          <div class="vocab-top">
+            <span class="vocab-word">Pagoda</span>
+            <span class="audio-pill">Listen</span>
+          </div>
+          <div class="vocab-mm">စေတီပုထိုး</div>
+          <div class="vocab-example">"The pagoda shines brightly."</div>
+        </div>
+
+        <div class="vocab-card" data-speak="Curiosity">
+          <div class="vocab-top">
+            <span class="vocab-word">Curiosity</span>
+            <span class="audio-pill">Listen</span>
+          </div>
+          <div class="vocab-mm">စူးစမ်းလိုစိတ်</div>
+          <div class="vocab-example">"Learning new things is fun."</div>
+        </div>
+
+        <div class="vocab-card" data-speak="Kindness">
+          <div class="vocab-top">
+            <span class="vocab-word">Kindness</span>
+            <span class="audio-pill">Listen</span>
+          </div>
+          <div class="vocab-mm">ကြင်နာတတ်ခြင်း</div>
+          <div class="vocab-example">"Always be kind to others."</div>
+        </div>
+
+        <div class="vocab-card" data-speak="Happiness">
+          <div class="vocab-top">
+            <span class="vocab-word">Happiness</span>
+            <span class="audio-pill">Listen</span>
+          </div>
+          <div class="vocab-mm">ပျော်ရွှင်မှု</div>
+          <div class="vocab-example">"A warm smile brings happiness."</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVERYDAY SENTENCES -->
+    <section class="section-block" id="sentences">
+      <div class="sec-header">
+        <h2 class="sec-title">Everyday Sentences</h2>
+        <span class="sec-sub">နေ့စဉ်ပြော ဝါကျတိုလေးများ</span>
+      </div>
+
+      <div class="phrase-stack">
+        <div class="phrase-row">
+          <div>
+            <div class="phrase-en">I carry my pink umbrella when it rains.</div>
+            <div class="phrase-mm">မိုးရွာတဲ့အခါ ငါ့ရဲ့ ပန်းရောင်ထီးလေးကို ဆောင်းတယ်။</div>
+          </div>
+          <button type="button" class="listen-btn" data-speak="I carry my pink umbrella when it rains.">Listen</button>
+        </div>
+
+        <div class="phrase-row">
+          <div>
+            <div class="phrase-en">I enjoy making crafts and reading books.</div>
+            <!-- <div class="phrase-mm">လက်မှုပစ္စည်းလေးတွေ လုပ်ရတာနဲ့ စာဖတ်ရတာကို နှစ်သက်တယ်။</div> -->
+          </div>
+          <button type="button" class="listen-btn" data-speak="I enjoy making crafts and reading books.">Listen</button>
+        </div>
+
+        <div class="phrase-row">
+          <div>
+            <div class="phrase-en">Labubu is my favorite little companion.</div>
+            <!-- <div class="phrase-mm">Labubu က ငါအကြိုက်ဆုံး အဖော်လေးပါ။</div> -->
+          </div>
+          <button type="button" class="listen-btn" data-speak="Labubu is my favorite little companion.">Listen</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>Jue Jue Myo Min Khin Website</footer>
+  </div>
+
+  <script>
+    function speakEnglish(text) {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "en-US";
+        utterance.rate = 0.9;
+        utterance.pitch = 1.05;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    document.querySelectorAll("[data-speak]").forEach((element) => {
+      element.addEventListener("click", () => {
+        speakEnglish(element.getAttribute("data-speak"));
+      });
+    });
+  </script>
+</body>
+</html>
